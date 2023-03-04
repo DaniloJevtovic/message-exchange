@@ -78,14 +78,36 @@ public class MessageService {
 	// primalac brise svoju poslatu poruku
 	public void deleteSentMessage(Long msgId, Long userId) {
 		Message sentMsg = messageRepository.findByIdAndSenderId(msgId, userId);
-		
+
 		// ako je i posiljac obrisao poruku - obrisi je posve
-		if(sentMsg.isDeletedForReciver())
+		if (sentMsg.isDeletedForReciver())
 			deleteMessage(msgId);
 		else {
 			sentMsg.setDeletedForSender(true);
 			messageRepository.save(sentMsg);
 		}
+	}
+
+	public void deleteAllRecivedMessages(Long userId) {
+		getRecivedMessagesForUser(userId).forEach(m -> {
+			if (m.isDeletedForSender())
+				deleteMessage(m.getId());
+			else {
+				m.setDeletedForReciver(true);
+				messageRepository.save(m);
+			}
+		});
+	}
+
+	public void deleteAllSentMessages(Long userId) {
+		getSentMessagesForUser(userId).forEach(m -> {
+			if (m.isDeletedForReciver())
+				deleteMessage(m.getId());
+			else {
+				m.setDeletedForSender(true);
+				messageRepository.save(m);
+			}
+		});
 	}
 
 	public MsgResponseDTO convertToMsgDTO(Message message) {

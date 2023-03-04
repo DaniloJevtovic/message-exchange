@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,14 +54,24 @@ public class MessageController {
 		messageService.deleteMessage(id);
 	}
 	
-	@PatchMapping("/recived/{msgId}/user/{userId}")
+	@DeleteMapping("/recived/{msgId}/user/{userId}")
 	public void deleteRecivedMessage(@PathVariable Long msgId, @PathVariable Long userId) {
 		messageService.deleteRecivedMessage(msgId, userId);
 	}
 	
-	@PatchMapping("/sent/{msgId}/user/{userId}")
+	@DeleteMapping("/sent/{msgId}/user/{userId}")
 	public void deleteSentMessage(@PathVariable Long msgId, @PathVariable Long userId) {
 		messageService.deleteSentMessage(msgId, userId);
+	}
+	
+	@DeleteMapping("/allSent/user/{userId}")
+	public void deleteAllSentMessages(@PathVariable Long userId) {
+		messageService.deleteAllSentMessages(userId);
+	}
+	
+	@DeleteMapping("/allRecived/user/{userId}")
+	public void deleteAllRecivedMessages(@PathVariable Long userId) {
+		messageService.deleteAllRecivedMessages(userId);
 	}
 
 }
