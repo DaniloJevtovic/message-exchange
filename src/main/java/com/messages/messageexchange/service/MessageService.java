@@ -3,6 +3,7 @@ package com.messages.messageexchange.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
@@ -60,6 +61,16 @@ public class MessageService {
 
 	public List<Message> getSentMessagesForUser(Long userId) {
 		return messageRepository.findBySenderIdAndIsDeletedForSenderFalse(userId);
+	}
+
+	public List<Message> getAllMessagesForUser(Long userId) {
+		return Stream.concat(getRecivedMessagesForUser(userId).stream(), getSentMessagesForUser(userId).stream())
+				.collect(Collectors.toList());
+	}
+
+	public List<Message> searchMessages(String subject, Long userId) {
+		return getAllMessagesForUser(userId).stream().filter(msg -> msg.getSubject().contains(subject))
+				.collect(Collectors.toList());
 	}
 
 	// primalac brise svoju primljenu poruku
