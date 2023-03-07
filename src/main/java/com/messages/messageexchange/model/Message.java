@@ -34,6 +34,7 @@ public class Message {
 	
 	private boolean isDeletedForSender;
 	private boolean isDeletedForReciver;
+	private boolean isRead;
 	
 	private LocalDateTime date;
 }

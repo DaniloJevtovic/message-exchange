@@ -29,9 +29,16 @@ public class MessageController {
 		return messageService.getAllMessages();
 	}
 
+	// dobavljanje poslate poruke za posiljaoca
 	@GetMapping("/{id}")
 	public Message getMessageById(@PathVariable Long id) {
 		return messageService.getMessageById(id);
+	}
+
+	// citanje poruke - primalac i oznacavanje porike kao procitane
+	@GetMapping("/read/{msgId}/reciver/{recId}")
+	public Message readMessage(@PathVariable Long msgId, @PathVariable Long recId) {
+		return messageService.readMessage(msgId, recId);
 	}
 
 	@GetMapping("/recived/{id}")
@@ -43,7 +50,7 @@ public class MessageController {
 	public List<Message> getSentMessagesForUser(@PathVariable Long id) {
 		return messageService.getSentMessagesForUser(id);
 	}
-	
+
 	@GetMapping("/allMessages/user/{userId}")
 	public List<Message> getAllMessagesForUser(@PathVariable Long userId) {
 		return messageService.getAllMessagesForUser(userId);

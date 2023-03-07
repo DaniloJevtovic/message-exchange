@@ -9,10 +9,10 @@ import com.messages.messageexchange.model.Message;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
 	// primljene poruke (koje nisu obrisane)
-	List<Message> findByReciverIdAndIsDeletedForReciverFalse(Long userId);
+	List<Message> findByReciverIdAndIsDeletedForReciverFalseOrderByDateDesc(Long userId);
 
 	// poslate poruke (koje nisu obrisane)
-	List<Message> findBySenderIdAndIsDeletedForSenderFalse(Long userId);
+	List<Message> findBySenderIdAndIsDeletedForSenderFalseOrderByDateDesc(Long userId);
 
 	// primljena poruka
 	Message findByIdAndReciverId(Long msgId, Long userId);

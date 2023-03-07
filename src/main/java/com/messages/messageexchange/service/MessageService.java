@@ -50,17 +50,29 @@ public class MessageService {
 		return convertToMsgDTO(message);
 	}
 
+	// ovo moze i na frontendu da se provjeri
+	public Message readMessage(Long msgId, Long reciverId) {
+		Message message = getMessageById(msgId);
+
+		if (message.getReciver().getId().equals(reciverId) && !message.isRead()) {
+			message.setRead(true);
+			return messageRepository.save(message);
+		}
+		
+		return message;
+	}
+
 	// potpuno brisanje poruke iz baze
 	public void deleteMessage(Long id) {
 		messageRepository.deleteById(id);
 	}
 
 	public List<Message> getRecivedMessagesForUser(Long userId) {
-		return messageRepository.findByReciverIdAndIsDeletedForReciverFalse(userId);
+		return messageRepository.findByReciverIdAndIsDeletedForReciverFalseOrderByDateDesc(userId);
 	}
 
 	public List<Message> getSentMessagesForUser(Long userId) {
-		return messageRepository.findBySenderIdAndIsDeletedForSenderFalse(userId);
+		return messageRepository.findBySenderIdAndIsDeletedForSenderFalseOrderByDateDesc(userId);
 	}
 
 	public List<Message> getAllMessagesForUser(Long userId) {
@@ -119,6 +131,12 @@ public class MessageService {
 				messageRepository.save(m);
 			}
 		});
+	}
+
+	public void setAsRead(Long msgId) {
+		Message message = getMessageById(msgId);
+		message.setRead(true);
+		messageRepository.save(message);
 	}
 
 	public MsgResponseDTO convertToMsgDTO(Message message) {
