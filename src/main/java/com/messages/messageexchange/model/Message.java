@@ -2,6 +2,8 @@ package com.messages.messageexchange.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,5 +38,6 @@ public class Message {
 	private boolean isDeletedForReciver;
 	private boolean isRead;
 	
+	@JsonFormat(pattern="dd-MM-yyyy / HH:mm:ss", timezone="Europe/Belgrade")
 	private LocalDateTime date;
 }
