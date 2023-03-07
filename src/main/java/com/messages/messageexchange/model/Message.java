@@ -38,6 +38,6 @@ public class Message {
 	private boolean isDeletedForReciver;
 	private boolean isRead;
 	
-	@JsonFormat(pattern="dd-MM-yyyy / HH:mm:ss", timezone="Europe/Belgrade")
+	@JsonFormat(pattern="dd.MM.yyyy / HH:mm:ss", timezone="Europe/Belgrade")
 	private LocalDateTime date;
 }
