@@ -35,8 +35,6 @@ public class MessageService {
 
 		message.setSubject(msgDto.subject());
 		message.setMessage(msgDto.message());
-		message.setDeletedForReciver(false);
-		message.setDeletedForSender(false);
 
 		User sender = userService.getUserById(msgDto.senderId());
 		User reciver = userService.getUserById(msgDto.reciverId());
@@ -58,7 +56,7 @@ public class MessageService {
 			message.setRead(true);
 			return messageRepository.save(message);
 		}
-		
+
 		return message;
 	}
 
@@ -133,15 +131,15 @@ public class MessageService {
 		});
 	}
 
-	public void setAsRead(Long msgId) {
+	public Message markAsRead(Long msgId) {
 		Message message = getMessageById(msgId);
 		message.setRead(true);
-		messageRepository.save(message);
+		return messageRepository.save(message);
 	}
 
 	public MsgResponseDTO convertToMsgDTO(Message message) {
 		return new MsgResponseDTO(message.getId(), message.getSubject(), message.getMessage(),
-				message.getSender().getEmail(), message.getReciver().getEmail(), message.getDate());
+				message.getSender().getEmail(), message.getReciver().getEmail(), message.isRead(), message.getDate());
 	}
 
 }

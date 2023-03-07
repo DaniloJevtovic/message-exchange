@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,6 +65,12 @@ public class MessageController {
 	@PostMapping
 	public MsgResponseDTO sendMessage(@RequestBody MsgRequestDTO msgRequestDTO) {
 		return messageService.sendMessage(msgRequestDTO);
+	}
+
+	// primalac moze da oznaci poruku kao procitanu
+	@PatchMapping("/markAsRead/{msgId}")
+	public Message markAsRead(@PathVariable Long msgId) {
+		return messageService.markAsRead(msgId);
 	}
 
 	@DeleteMapping("/{id}")
