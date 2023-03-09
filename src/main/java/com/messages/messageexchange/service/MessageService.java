@@ -83,7 +83,7 @@ public class MessageService {
 				.collect(Collectors.toList());
 	}
 
-	// primalac brise svoju primljenu poruku
+	// korisnik brise svoju primljenu poruku
 	public void deleteRecivedMessage(Long msgId, Long userId) {
 		Message recivedMsg = messageRepository.findByIdAndReciverId(msgId, userId);
 
@@ -96,7 +96,7 @@ public class MessageService {
 		}
 	}
 
-	// primalac brise svoju poslatu poruku
+	// korisnik brise svoju poslatu poruku
 	public void deleteSentMessage(Long msgId, Long userId) {
 		Message sentMsg = messageRepository.findByIdAndSenderId(msgId, userId);
 
@@ -133,6 +133,10 @@ public class MessageService {
 
 	public Message markAsRead(Long msgId) {
 		Message message = getMessageById(msgId);
+
+		if (message.isRead())
+			return message;
+
 		message.setRead(true);
 		return messageRepository.save(message);
 	}

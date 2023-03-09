@@ -24,20 +24,20 @@ public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String subject;
 	private String message;
-	
+
 	@ManyToOne
 	private User sender;
-	
+
 	@ManyToOne
 	private User reciver;
-	
+
 	private boolean isDeletedForSender;
 	private boolean isDeletedForReciver;
 	private boolean isRead;
-	
-	@JsonFormat(pattern="dd.MM.yyyy / HH:mm:ss", timezone="Europe/Belgrade")
+
+	@JsonFormat(pattern = "dd.MM.yyyy / HH:mm:ss", timezone = "Europe/Belgrade")
 	private LocalDateTime date;
 }
